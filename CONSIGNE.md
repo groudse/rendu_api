@@ -65,7 +65,7 @@ Vous trouverez ci-dessous une liste exhaustive des différentes routes à intég
 Attention à bien respecter scrupuleusement le chemin donne par vos routes, sans quoi, vos tests ne pourront s'effectuer convenablement. Si nécessaire, à la suite du speech client et des potentielles notes du lead-developper, vous trouverez les paramètres de la routes si celle ci en a besoin.
 *Sauf indication contraire toutes les routes devront être protegées. (Devra renvoyer une 401 (Unauthorized) si l'utilisateur n'est pas connecté).*
 
-### users.controller.ts
+### user.controller.ts
 
 #### POST users/auth/sign-up (route publique)
 
@@ -167,7 +167,7 @@ name!: string;
 referringEmployeeId!: string; //au format uuidv4
 ```
 
-### project-users.controller.ts
+### project-user.controller.ts
 
 #### GET /project-users
 
