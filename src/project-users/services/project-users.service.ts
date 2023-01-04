@@ -16,35 +16,32 @@ export class ProjectUserService {
     }
 
     async addToProjects(req: any) {
-        console.log("body: ", req.body)
+
         const test = await this.projectService.findId(req.body.projectId)
-        console.log("find id: ", test)
-        if(test.referringEmployeeId === req.body.userId){
-            console.log("YES")
-        }else
-        {
-            console.log("NO")
+
+        if (test.referringEmployeeId === req.body.userId) {
+
+            if (req.user != undefined) {
+                if (req.user.role == "Admin" || req.user.role == "ProjectManager") {
+                    const projet = await this.projectService.findId(req.body.projectId);
+
+                    if (projet.referringEmployeeId != req.body.userId) {
+                        return this.projectUserRepository.save(this.projectUserRepository.create({
+                            startDate: req.body.startDate,
+                            endDate: req.body.endDate,
+                            projectId: req.body.projectId,
+                            userId: req.body.userId
+                        }))
+                    } else {
+                        throw new ConflictException();
+                    }
+                } else {
+                    throw new UnauthorizedException();
+                }
+            } else {
+                throw new NotFoundException();
+            }
         }
-        // if (req.user != undefined) {
-        //     if (req.user.role == "Admin" || req.user.role == "ProjectManager") {
-        //         // const projet = await this.projectService.findId(req.body.projectId);
-        //
-        //         if (projet.referringEmployeeId != req.body.userId) {
-        //             return this.projectUserRepository.save(this.projectUserRepository.create({
-        //                 startDate: req.body.startDate,
-        //                 endDate: req.body.endDate,
-        //                 projectId: req.body.projectId,
-        //                 userId: req.body.userId
-        //             }))
-        //         } else {
-        //             throw new ConflictException();
-        //         }
-        //     } else {
-        //         throw new UnauthorizedException();
-        //     }
-        // } else {
-        //     throw new NotFoundException();
-        // }
     }
 
     async findId(id: string): Promise<ProjectUser | null> {

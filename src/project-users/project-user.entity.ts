@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Project} from "../projects/project.entity";
 
 @Entity()
 export class ProjectUser {
@@ -10,6 +11,8 @@ export class ProjectUser {
   public endDate!: Date;
   @Column('uuid')
   public projectId!: string; //au format uuidv4
+  @OneToOne(() => Project)
+  @JoinColumn()
   @Column('uuid')
   public userId!: string; //au format uuidv4
 }

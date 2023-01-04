@@ -1,4 +1,4 @@
-import {Column} from "typeorm";
+import {Column, JoinColumn, OneToOne} from "typeorm";
 
 export class ProjetInfo {
     @Column()
